@@ -11,7 +11,6 @@ export default function UsuarioForm() {
   const service: UsuarioService = new UsuarioService();
 
   async function handleSubmit(values: Usuario, actions: any): Promise<void> {
-    console.log(values);
     try {
       await service.criarUsuario(values);
     } catch (e) {

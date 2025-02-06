@@ -1,8 +1,14 @@
-import axios from 'axios';
+import axios, { AxiosInstance } from 'axios';
+
+const instance: AxiosInstance = axios.create({
+  headers: {
+    Authorization: 'Bearer xyz',
+  }
+});
 
 async function get(url: string): Promise<any> {
   try {
-    const res = await axios.get(url);
+    const res = await instance.get(url);
     return res.data;
   } catch (error) {
     console.error('GET request error:', error);
@@ -12,7 +18,7 @@ async function get(url: string): Promise<any> {
 
 async function post(url: string, payload: any): Promise<any> {
   try {
-    const res = await axios.post(url, payload);
+    const res = await instance.post(url, payload);
     return res.data;
   } catch (error) {
     console.error('POST request error:', error);
@@ -22,7 +28,7 @@ async function post(url: string, payload: any): Promise<any> {
 
 async function put(url: string, payload: any): Promise<any> {
   try {
-    const res = await axios.put(url, payload);
+    const res = await instance.put(url, payload);
     return res.data;
   } catch (error) {
     console.error('PUT request error:', error);
@@ -32,7 +38,7 @@ async function put(url: string, payload: any): Promise<any> {
 
 async function del(url: string): Promise<any> {
   try {
-    const res = await axios.delete(url);
+    const res = await instance.delete(url);
     return res.data;
   } catch (error) {
     console.error('DELETE request error:', error);
