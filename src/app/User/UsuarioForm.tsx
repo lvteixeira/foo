@@ -1,23 +1,26 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import UsuarioDTO, { Usuario, getInitialValues } from "./UsuarioDTO";
-import UsuarioService from "./UsuarioService";
+import useUsuarioMutations from "./useUsuarioMutations";
 
 export default function UsuarioForm() {
+  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
   const validationSchema = UsuarioDTO;
   const initialValues: Usuario = getInitialValues();
-  const service: UsuarioService = new UsuarioService();
+  const { listar, criar } = useUsuarioMutations(setUsuarios);
+
+  useEffect(() => {
+    listar.mutate();
+  }, []);
 
   async function handleSubmit(values: Usuario, actions: any): Promise<void> {
-    try {
-      await service.criarUsuario(values);
-    } catch (e) {
-      console.error("Falha ao criar usuário", e);
-    } finally {
-      actions.setSubmitting(false);
-    }
+    criar.mutate(values, {
+      onSettled: () => {
+        actions.setSubmitting(false);
+      },
+    });
   }
 
   return (
@@ -27,7 +30,7 @@ export default function UsuarioForm() {
         validationSchema={validationSchema}
         onSubmit={handleSubmit}
       >
-        {({ isSubmitting }) => (
+        {() => (
           <Form>
             <div className="inputNome">
               <label htmlFor="nome">Nome: </label>
@@ -45,7 +48,7 @@ export default function UsuarioForm() {
               <ErrorMessage name="email" component="div" className="error" />
             </div>
             <div className="submit">
-              <button type="submit" disabled={isSubmitting}>
+              <button type="submit" disabled={criar.isPending}>
                 Submit
               </button>
             </div>
