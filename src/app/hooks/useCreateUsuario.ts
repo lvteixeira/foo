@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UsuarioService } from "../service/UsuarioService";
-import type { Usuario } from "../types/Usuario";
+import type { Usuario } from "../types/UsuarioDTO";
 import { USERS_QUERY_KEY } from "./useUsuarios";
 
 export function useCreateUsuario() {
