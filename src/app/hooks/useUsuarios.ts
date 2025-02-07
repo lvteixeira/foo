@@ -10,6 +10,6 @@ export function useUsuarios() {
   return useQuery({
     queryKey: USERS_QUERY_KEY,
     queryFn: service.listar,
-    staleTime: 5 * 60 * 1000, // 5 minutes
+    staleTime: 5 * 60 * 1000,
   });
 }
