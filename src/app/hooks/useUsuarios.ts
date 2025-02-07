@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { UsuarioService } from "../service/UsuarioService";
-import type { Usuario } from "../types/Usuario";
+import type { Usuario } from "../types/UsuarioDTO";
 
 export const USERS_QUERY_KEY = ["usuarios"] as const;
 
