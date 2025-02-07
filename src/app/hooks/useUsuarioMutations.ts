@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import UsuarioService from "./UsuarioService";
-import { Usuario } from "./UsuarioDTO";
+import UsuarioService from "../service/UsuarioService";
+import { Usuario } from "../types/UsuarioDTO";
 
 export default function useUsuarioMutations(setUsuarios: React.Dispatch<React.SetStateAction<Usuario[]>>) {
   const service = new UsuarioService();
@@ -12,7 +12,7 @@ export default function useUsuarioMutations(setUsuarios: React.Dispatch<React.Se
       setUsuarios(data);
     },
     onError: (error: Error) => {
-      console.error("Falha ao listar usuários", error);
+      console.error("Falha ao listar usuários", error.message);
     },
   });
 
@@ -22,7 +22,7 @@ export default function useUsuarioMutations(setUsuarios: React.Dispatch<React.Se
       queryClient.invalidateQueries({ queryKey: ["usuarios"] });
     },
     onError: (error: Error) => {
-      console.error("Falha ao criar usuário", error);
+      console.error("Falha ao criar usuário", error.message);
     },
   });
 

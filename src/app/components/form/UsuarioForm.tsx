@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import UsuarioDTO, { Usuario, getInitialValues } from "./UsuarioDTO";
-import useUsuarioMutations from "./useUsuarioMutations";
+import UsuarioDTO, { Usuario, getInitialValues } from "../../types/UsuarioDTO";
+import useUsuarioMutations from "../../hooks/useUsuarioMutations";
 
 export default function UsuarioForm() {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);

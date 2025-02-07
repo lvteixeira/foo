@@ -2,7 +2,7 @@
 
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import UsuarioForm from "./User/UsuarioForm";
+import UsuarioForm from "./components/form/UsuarioForm";
 
 const queryClient = new QueryClient();
 

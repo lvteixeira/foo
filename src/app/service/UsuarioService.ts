@@ -1,15 +1,10 @@
-import HttpUtil from "./HttpUtil";
+import HttpUtil from "../util/HttpUtil";
+import Constantes from "../util/Constantes";
 
 export default class UsuarioService {
-  baseUrl: string;
-
-  constructor() {
-    this.baseUrl = "http://localhost:8080/postagem";
-  }
-
   async listar(): Promise<any> {
     try {
-      return await HttpUtil.get(this.baseUrl);
+      return await HttpUtil.get(Constantes.URL_USUARIO);
     } catch (error) {
       throw this.handleError(error);
     }
@@ -17,7 +12,7 @@ export default class UsuarioService {
 
   async criarUsuario(payload: any): Promise<any> {
     try {
-      return await HttpUtil.post(this.baseUrl, payload);
+      return await HttpUtil.post(Constantes.URL_USUARIO, payload);
     } catch (error) {
       throw this.handleError(error);
     }
@@ -25,7 +20,7 @@ export default class UsuarioService {
 
   async recuperarPorId(id: string): Promise<any> {
     try {
-      const url = this.baseUrl + "/" + id;
+      const url = Constantes.URL_USUARIO + "/" + id;
       return await HttpUtil.get(url);
     } catch (error) {
       throw this.handleError(error);
@@ -34,7 +29,7 @@ export default class UsuarioService {
 
   async atualizarUsuario(payload: any, id: string): Promise<any> {
     try {
-      const url = this.baseUrl + "/" + id;
+      const url = Constantes.URL_USUARIO + "/" + id;
       return await HttpUtil.put(url, payload);
     } catch (error) {
       throw this.handleError(error);
@@ -43,7 +38,7 @@ export default class UsuarioService {
 
   async removerUsuario(id: string): Promise<any> {
     try {
-      const url = this.baseUrl + "/" + id;
+      const url = Constantes.URL_USUARIO + "/" + id;
       return await HttpUtil.delete(url);
     } catch (error) {
       throw this.handleError(error);
