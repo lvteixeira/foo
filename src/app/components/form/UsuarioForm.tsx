@@ -1,26 +1,19 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import UsuarioDTO, { Usuario, getInitialValues } from "../../types/UsuarioDTO";
-import useUsuarioMutations from "../../hooks/useUsuarioMutations";
+import useCreateUsuario from "../../hooks/useCreateUsuario";
+import useUsuarios from "../../hooks/useUsuarios";
 
 export default function UsuarioForm() {
-  const [usuarios, setUsuarios] = useState<Usuario[]>([]);
+  const { data: usuarios } = useUsuarios();
+  const criarUsuario = useCreateUsuario();
   const validationSchema = UsuarioDTO;
   const initialValues: Usuario = getInitialValues();
-  const { listar, criar } = useUsuarioMutations(setUsuarios);
 
-  useEffect(() => {
-    listar.mutate();
-  }, []);
-
-  async function handleSubmit(values: Usuario, actions: any): Promise<void> {
-    criar.mutate(values, {
-      onSettled: () => {
-        actions.setSubmitting(false);
-      },
-    });
+  async function handleSubmit(values: Usuario): Promise<void> {
+    criarUsuario.mutate(values);
   }
 
   return (
@@ -48,13 +41,25 @@ export default function UsuarioForm() {
               <ErrorMessage name="email" component="div" className="error" />
             </div>
             <div className="submit">
-              <button type="submit" disabled={criar.isPending}>
+              <button type="submit" disabled={criarUsuario.isPending}>
                 Submit
               </button>
             </div>
           </Form>
         )}
       </Formik>
+      {usuarios && (
+        <div className="lista-usuarios">
+          <h2>Lista de Usuários</h2>
+          <ul>
+            {usuarios.map((usuario) => (
+              <li key={usuario.id}>
+                {usuario.nome} {usuario.sobrenome}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
